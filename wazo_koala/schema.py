@@ -11,21 +11,27 @@ from marshmallow.validate import Length, Range
 
 from wazo_calld.plugin_helpers.mallow import StrictDict
 
+class FacilitySchema(Schema):
+    code = fields.Str(required=True, validate=Length(min=1))
+    name = fields.Str(required=True, validate=Length(min=3))
+
+class SectorSchema(Schema):
+    id = fields.Integer(required=True)
+    name = fields.Str(required=True, validate=Length(min=3))
+
+class JobSchema(Schema):
+    id = fields.Integer(required=True)
+    name = fields.Str(required=True, validate=Length(min=3))
+
 class KoalaSchema(Schema):
     event_id = fields.Str(required=True, validate=Length(min=1))
     username = fields.Str(required=True, validate=Length(min=4))
     firstname = fields.Str(required=True, validate=Length(min=1))
     lastname = fields.Str(required=True, validate=Length(min=1))
     device_id = fields.Str(required=True, validate=Length(min=1))
-    facility = StrictDict(code=fields.Str(required=True, validate=Length(min=1)),
-                          name=fields.Str(required=True, validate=Length(min=3)),
-                          missing=dict)
-    sector = StrictDict(id=fields.Integer(required=True),
-                         name=fields.Str(required=True, validate=Length(min=3)),
-                         missing=dict)
-    job = StrictDict(id=fields.Integer(required=True),
-                     name=fields.Str(validate=Length(min=3)),
-                     missing=dict)
+    facility = fields.Nested(FacilitySchema)
+    sector = fields.Nested(SectorSchema)
+    job = fields.Nested(JobSchema)
     expiration = fields.Integer(validate=Range(min=3600), missing=86400)
 
     class Meta:
