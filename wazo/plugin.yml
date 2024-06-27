@@ -1,0 +1,9 @@
+name: koala
+namespace: mwolff44
+version: 0.0.1
+author: Mathias WOLFF
+display_name: KOALA
+min_wazo_version: 24.02
+tags:
+  - experimental
+homepage: https://github.com/mwolff44/koala

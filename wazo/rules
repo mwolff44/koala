@@ -1,0 +1,27 @@
+#!/bin/sh
+# Copyright 2018-2021 Wazo Team (see the AUTHORS file)
+# SPDX-License-Identifier: GPL-3.0+
+
+case "$1" in
+    build)
+        python3 setup.py bdist
+        ;;
+
+    package)
+        tar xvf dist/koala-*.tar.gz -C ${pkgdir}
+        cp -R etc ${pkgdir}/
+        ;;
+
+    install)
+	    systemctl restart wazo-confd
+        ;;
+
+    uninstall)
+	    systemctl restart wazo-confd
+        ;;
+
+    *)
+        echo "$0 called with unknown argument '$1'" >&2
+        exit 1
+    ;;
+esac
