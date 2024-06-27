@@ -17,7 +17,7 @@ from .schema import (
 class KoalaLoginResource(AuthResource):
 
     def __init__(self, koala_service):
-        self.koala_service = koala_service
+        self._koala_service = koala_service
 
     #@required_acl('confd.koala.create')
     def post(self):
@@ -29,7 +29,7 @@ class KoalaLoginResource(AuthResource):
 class KoalaLogoutResource(AuthResource):
 
     def __init__(self, koala_service):
-        self.koala_service = koala_service
+        self._koala_service = koala_service
 
     #@required_acl('confd.koala.create')
     def post(self):
