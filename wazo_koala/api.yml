@@ -1,21 +1,3 @@
-openapi: 3.1.0
-servers:
-  - url: https://fake-wazo-example.com/koala
-info:
-  description: "Koala endpoints for login/logout users in Wazo"
-  version: 1.0.0
-  title: KOALA WAZO APIs
-  contact:
-    email: presales@wazo.io
-  license:
-    name: MIT
-    url: https://opensource.org/license/mit
-tags:
-  - name: koala
-    description: Operations about Koala app
-    externalDocs:
-      description: Wazo developper documentation
-      url: https://developers.wazo.io
 paths:
   /koala/login:
     post:
