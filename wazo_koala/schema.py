@@ -9,7 +9,7 @@ from marshmallow import (
 )
 from marshmallow.validate import Length, Range
 
-rom wazo_calld.plugin_helpers.mallow import StrictDict
+from wazo_calld.plugin_helpers.mallow import StrictDict
 
 class KoalaSchema(Schema):
     event_id = fields.Str(required=True, validate=Length(min=1))
