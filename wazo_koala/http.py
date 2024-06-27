@@ -14,20 +14,25 @@ from .schema import (
 )
 
 
-class KoalaResource(AuthResource):
+class KoalaLoginResource(AuthResource):
 
     def __init__(self, koala_service):
         self.koala_service = koala_service
 
     #@required_acl('confd.koala.create')
-    def login(self):
+    def post(self):
         request_body = intercept_schema.load(request.get_json(force=True))
         result = self._koala_service.login(request_body)
 
         return result, 201
 
+class KoalaLogoutResource(AuthResource):
+
+    def __init__(self, koala_service):
+        self.koala_service = koala_service
+
     #@required_acl('confd.koala.create')
-    def logout(self):
+    def post(self):
         request_body = intercept_schema.load(request.get_json(force=True))
         result = self._koala_service.login(request_body)
 

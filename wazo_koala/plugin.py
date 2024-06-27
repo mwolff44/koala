@@ -27,12 +27,12 @@ class Plugin:
         koala_service = KoalaService(confd_client)
 
         api.add_resource(
-            KoalaResource,
+            KoalaLoginResource,
             '/koala/login',
             resource_class_args=[koala_service]
         )
         api.add_resource(
-            KoalaResource,
+            KoalaLogoutResource,
             '/koala/logout',
             resource_class_args=[koala_service]
         )
