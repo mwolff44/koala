@@ -17,7 +17,7 @@ setup(
     url=metadata['homepage'],
     packages=find_packages(),
     entry_points={
-        'wazo_confd.plugins': [
+        'wazo_calld.plugins': [
             'koala = wazo_koala.plugin:Plugin'
     },
 ),

@@ -13,11 +13,11 @@ case "$1" in
         ;;
 
     install)
-	    systemctl restart wazo-confd
+	    systemctl restart wazo-calld
         ;;
 
     uninstall)
-	    systemctl restart wazo-confd
+	    systemctl restart wazo-calld
         ;;
 
     *)
