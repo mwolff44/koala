@@ -2,7 +2,6 @@
 # Copyright 2024 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
-
 from flask import request
 from flask_restful import Resource
 from xivo.tenant_flask_helpers import Tenant

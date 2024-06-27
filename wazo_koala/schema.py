@@ -9,8 +9,6 @@ from marshmallow import (
 )
 from marshmallow.validate import Length, Range
 
-from wazo_calld.plugin_helpers.mallow import StrictDict
-
 class FacilitySchema(Schema):
     code = fields.Str(required=True, validate=Length(min=1))
     name = fields.Str(required=True, validate=Length(min=3))

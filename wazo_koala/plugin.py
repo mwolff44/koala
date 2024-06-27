@@ -17,14 +17,12 @@ class Plugin:
     def load(self, dependencies):
         api = dependencies['api']
         config = dependencies['config']
-        token_renewer = dependencies['token_renewer']
+        token_changed_subscribe = dependencies['token_changed_subscribe']
 
         auth_client = AuthClient(**config['auth'])
         confd_client = ConfdClient(**config['confd'])
 
-        token_renewer.subscribe_to_next_token_details_change(
-            self.set_service_tenant_uuid
-        )
+        token_changed_subscribe(confd_client.set_token)
 
         koala_service = KoalaService(confd_client)
 
