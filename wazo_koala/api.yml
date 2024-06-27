@@ -1,0 +1,121 @@
+openapi: 3.1.0
+servers:
+  - url: https://fake-wazo-example.com/koala
+info:
+  description: "Koala endpoints for login/logout users in Wazo"
+  version: 1.0.0
+  title: KOALA WAZO APIs
+  contact:
+    email: presales@wazo.io
+  license:
+    name: MIT
+    url: https://opensource.org/license/mit
+tags:
+  - name: koala
+    description: Operations about Koala app
+    externalDocs:
+      description: Wazo developper documentation
+      url: https://developers.wazo.io
+paths:
+  /koala/login:
+    post:
+      tags:
+        - koala
+      summary: Login from Koala app
+      description: "Login from Koala app"
+      operationId: loginKoala
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Koala"
+        description: Login details of koala user
+        required: true
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: Invalid input
+        "404":
+          description: Not found
+  /koala/logout:
+    post:
+      tags:
+        - koala
+      summary: Logout from Koala app
+      description: "Logout from Koala app"
+      operationId: logoutKoala
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Koala"
+        description: Logout details of koala user
+        required: true
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: Invalid input
+        "404":
+          description: Not found
+components:
+  schemas:
+    Koala:
+      type: object
+      properties:
+        eventId:
+          description: unique ID of the event
+          type: string
+        username:
+          description: User supplied username
+          type: string
+          minLength: 4
+          example: Marie64
+        firstName:
+          description: User first name
+          type: string
+          minLength: 1
+          example: Marie
+        lastName:
+          description: User last name
+          type: string
+          minLength: 1
+          example: DUPOND
+        deviceId:
+          description: Unique ID of the Koala device
+          type: string
+        facility:
+          description: Facility information
+          type: object
+          properties:
+            facilityCode:
+              type: string
+            facilityName:
+              type: string
+              minLength: 3
+        sector:
+          description: Sector information
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            name:
+              type: string
+              minLength: 3
+        job:
+          description: Job information
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            name:
+              type: string
+              minLength: 3
+        expiration:
+          description: Session duration
+          type: integer
+          format: int32
+
