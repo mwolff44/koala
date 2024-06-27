@@ -1,17 +1,18 @@
 # -*- coding: utf-8 -*-
-# Copyright 024 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2024 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
+
+import logging
 
 from wazo_auth_client import Client as AuthClient
 from wazo_confd_client import Client as ConfdClient
 
-from .http import (
-    KoalaResource
-    )
+from .http import KoalaResource
 from .services import KoalaService
 
+logger = logging.getLogger(__name__)
 
-class Plugin(object):
+class Plugin:
 
     def load(self, dependencies):
         api = dependencies['api']
@@ -27,5 +28,13 @@ class Plugin(object):
 
         koala_service = KoalaService(confd_client)
 
-        api.add_resource(KoalaResource, '/koala/login', resource_class_args=[koala_service])
-        api.add_resource(KoalaResource, '/koala/logout', resource_class_args=[koala_service])
+        api.add_resource(
+            KoalaResource,
+            '/koala/login',
+            resource_class_args=[koala_service]
+        )
+        api.add_resource(
+            KoalaResource,
+            '/koala/logout',
+            resource_class_args=[koala_service]
+        )

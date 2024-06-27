@@ -17,17 +17,17 @@ from .schema import (
 
 class KoalaResource(AuthResource):
 
-    def __init__(self, qkoala_service):
-        self._koala_service = koala_service
+    def __init__(self, koala_service):
+        self.koala_service = koala_service
 
-    @required_acl('confd.koala.create')
+    #@required_acl('confd.koala.create')
     def login(self):
         request_body = intercept_schema.load(request.get_json(force=True))
         result = self._koala_service.login(request_body)
 
         return result, 201
 
-    @required_acl('confd.koala.create')
+    #@required_acl('confd.koala.create')
     def logout(self):
         request_body = intercept_schema.load(request.get_json(force=True))
         result = self._koala_service.login(request_body)
