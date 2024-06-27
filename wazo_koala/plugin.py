@@ -7,7 +7,7 @@ import logging
 from wazo_auth_client import Client as AuthClient
 from wazo_confd_client import Client as ConfdClient
 
-from .http import KoalaResource
+from .http import KoalaLoginResource, KoalaLogoutResource
 from .services import KoalaService
 
 logger = logging.getLogger(__name__)
