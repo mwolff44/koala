@@ -5,8 +5,8 @@
 from wazo_auth_client import Client as AuthClient
 from wazo_confd_client import Client as ConfdClient
 
-from .resources import (
-    LoginResource
+from .http import (
+    KoalaResource
     )
 from .services import KoalaService
 
@@ -27,5 +27,5 @@ class Plugin(object):
 
         koala_service = KoalaService(confd_client)
 
-        api.add_resource(QueuesResource, '/koala/login', resource_class_args=[koala_service])
-        api.add_resource(QueuesResource, '/koala/logout', resource_class_args=[koala_service])
+        api.add_resource(KoalaResource, '/koala/login', resource_class_args=[koala_service])
+        api.add_resource(KoalaResource, '/koala/logout', resource_class_args=[koala_service])
