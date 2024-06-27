@@ -17,12 +17,12 @@ class KoalaService(object):
             'FirstName': params.get('firstName'),
             'LastName': params.get('lastName'),
             'DeviceID': params.get('deviceId'),
-            'FacilityCode': params.get('facility').json['code'],
-            'FacilityName': params.get('facility').json['name'],
-            'SectorID': params.get('sector').json['id'],
-            'SectorName': params.get('sector').json['name'],
-            'JobID': params.get('job').json['id'],
-            'JobName': params.get('job').json['name'],
+            'FacilityCode': params.get('facility')['code'],
+            'FacilityName': params.get('facility')['name'],
+            'SectorID': params.get('sector')['id'],
+            'SectorName': params.get('sector')['name'],
+            'JobID': params.get('job')['id'],
+            'JobName': params.get('job')['name'],
             'Expiration': params.get('expiration')
         }
         return 'OK'
@@ -35,12 +35,12 @@ class KoalaService(object):
             'FirstName': params.get('firstName'),
             'LastName': params.get('lastName'),
             'DeviceID': params.get('deviceId'),
-            'FacilityCode': params.get('facility').json['code'],
-            'FacilityName': params.get('facility').json['name'],
-            'SectorID': params.get('sector').json['id'],
-            'SectorName': params.get('sector').json['name'],
-            'JobID': params.get('job').json['id'],
-            'JobName': params.get('job').json['name'],
+            'FacilityCode': params.get('facility')['code'],
+            'FacilityName': params.get('facility')['name'],
+            'SectorID': params.get('sector')['id'],
+            'SectorName': params.get('sector')['name'],
+            'JobID': params.get('job')['id'],
+            'JobName': params.get('job')['name'],
             'Expiration': params.get('expiration')
         }
         return 'OK'
