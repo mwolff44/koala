@@ -7,8 +7,8 @@ from flask import request
 from flask_restful import Resource
 from xivo.tenant_flask_helpers import Tenant
 
-from wazo_confd.auth import required_acl
-from wazo_confd.http import AuthResource
+from wazo_calld.auth import required_acl
+from wazo_calld.http import AuthResource
 
 from .schema import (
     koala_schema,
