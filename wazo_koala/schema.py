@@ -22,11 +22,11 @@ class JobSchema(Schema):
     name = fields.Str(required=True, validate=Length(min=3))
 
 class KoalaSchema(Schema):
-    event_id = fields.Str(required=True, validate=Length(min=1))
+    eventId = fields.Str(required=True, validate=Length(min=1))
     username = fields.Str(required=True, validate=Length(min=4))
-    firstname = fields.Str(required=True, validate=Length(min=1))
-    lastname = fields.Str(required=True, validate=Length(min=1))
-    device_id = fields.Str(required=True, validate=Length(min=1))
+    firstName = fields.Str(required=True, validate=Length(min=1))
+    lastName = fields.Str(required=True, validate=Length(min=1))
+    deviceId = fields.Str(required=True, validate=Length(min=1))
     facility = fields.Nested(FacilitySchema)
     sector = fields.Nested(SectorSchema)
     job = fields.Nested(JobSchema)

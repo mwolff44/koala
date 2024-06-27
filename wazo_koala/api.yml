@@ -64,9 +64,9 @@ definitions:
         description: Facility information
         type: object
         properties:
-          facilityCode:
+          code:
             type: string
-          facilityName:
+          name:
             type: string
             minLength: 3
       sector:
@@ -93,6 +93,7 @@ definitions:
         description: Session duration
         type: integer
         format: int32
+        example: 3600
 parameters:
   Koala:
     name: body
