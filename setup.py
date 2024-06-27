@@ -22,7 +22,7 @@ setup(
     },
     entry_points={
         'wazo_calld.plugins': [
-            'koala = wazo_koala.plugin:Plugin'
-        ],
+            'koala = wazo_koala.plugin:Plugin',
+        ]
     },
 ),
