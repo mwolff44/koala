@@ -15,6 +15,9 @@ setup(
     description=metadata['display_name'],
     author=metadata['author'],
     url=metadata['homepage'],
-
     packages=find_packages(),
-)
+    entry_points={
+        'wazo_confd.plugins': [
+            'koala = wazo_koala.plugin:Plugin'
+    },
+),
