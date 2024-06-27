@@ -21,8 +21,9 @@ class KoalaLoginResource(AuthResource):
 
     #@required_acl('confd.koala.create')
     def post(self):
+        tenant = Tenant.autodetect()
         request_body = koala_schema.load(request.get_json(force=True))
-        result = self._koala_service.add_koala_member(request_body)
+        result = self._koala_service.add_koala_member(request_body, tenant.uuid)
 
         return result, 201
 
@@ -33,7 +34,8 @@ class KoalaLogoutResource(AuthResource):
 
     #@required_acl('confd.koala.create')
     def post(self):
+        tenant = Tenant.autodetect()
         request_body = koala_schema.load(request.get_json(force=True))
-        result = self._koala_service.remove_koala_member(request_body)
+        result = self._koala_service.remove_koala_member(request_body, tenant.uuid)
 
         return result, 201
