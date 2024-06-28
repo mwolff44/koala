@@ -4,7 +4,6 @@
 import logging
 
 
-
 class KoalaService(object):
 
     def __init__(self, confd):
@@ -15,41 +14,12 @@ class KoalaService(object):
         self._remove_old_koala_member(params, tenant_uuid, users)
         self._assign_koala_member(params, tenant_uuid, users)
         
-
-        add_member = {
-            'eventID': params.get('eventId'),
-            'username': params.get('username'),
-            'firstName': params.get('firstName'),
-            'lastName': params.get('lastName'),
-            'deviceID': params.get('deviceId'),
-            'facilityCode': params.get('facility')['code'],
-            'facilityName': params.get('facility')['name'],
-            'sectorID': params.get('sector')['id'],
-            'sectorName': params.get('sector')['name'],
-            'jobID': params.get('job')['id'],
-            'jobName': params.get('job')['name'],
-            'expiration': params.get('expiration')
-        }
         return 'OK'
 
     def remove_koala_member(self, params, tenant_uuid):
         users = self._get_user_list(tenant_uuid)
         self._remove_old_koala_member(params, tenant_uuid, users)
 
-        remove_member = {
-            'eventID': params.get('eventId'),
-            'username': params.get('username'),
-            'firstName': params.get('firstName'),
-            'lastName': params.get('lastName'),
-            'deviceID': params.get('deviceId'),
-            'facilityCode': params.get('facility')['code'],
-            'facilityName': params.get('facility')['name'],
-            'sectorID': params.get('sector')['id'],
-            'sectorName': params.get('sector')['name'],
-            'jobID': params.get('job')['id'],
-            'jobName': params.get('job')['name'],
-            'expiration': params.get('expiration')
-        }
         return 'OK'
 
     def _get_user_list(self, tenant_uuid):
@@ -67,7 +37,7 @@ class KoalaService(object):
     def _find_wazo_user_associated_with_username(self, users, username):
         for user in users['items']:
             if str(user['userfield']) == username:
-                return user['id']
+                return user
 
     def _find_group(self, tenant_uuid, group_name):
         # Get group id based on group name
@@ -91,26 +61,40 @@ class KoalaService(object):
 
     def _remove_old_koala_member(self, params, tenant_uuid, users):
         # Check if this deviceID is already assigned to a wazo user
-        old_wazo_user_id = self._find_wazo_user_associated_with_username(users, params.get('username'))
+        old_wazo_user = self._find_wazo_user_associated_with_username(users, params.get('username'))
 
+        if old_wazo_user:
+            # Clean old device from groups
+            self._remove_member_groups(old_wazo_user['id'])
+
+            # Clear koala user info
+            self.confd.users.update({
+                'id': old_wazo_user['id'],
+                'firstname': old_wazo_user['description'],
+                'lastname': '',
+                'caller_id': '"' + old_wazo_user['description'] + '"',
+                'userfield': old_wazo_user['description']
+            })
+            # ToDo : Remove fallbacks
+        else:
+            print("old deviceID not assigned to a wazo user")
+
+        # Clean new device
         wazo_device_id = self._find_wazo_user(users, params.get('deviceId'))
         if wazo_device_id:
             self._remove_member_groups(wazo_device_id)
-        else:
-            print("deviceID not assigned to goups")
 
-        if old_wazo_user_id:
             # Clear koala user info
             self.confd.users.update({
-                'id': old_wazo_user_id,
+                'id': wazo_device_id,
                 'firstname': params.get('deviceId'),
                 'lastname': '',
                 'caller_id': '"' + params.get('deviceId') + '"',
-                'userfield': params.get('deviceId')            })
+                'userfield': params.get('deviceId')
+            })
             # ToDo : Remove fallbacks
-            # ToDo : Reset name in main user line
         else:
-            print("deviceID not assigned to a wazo user")
+            print("deviceID not found !")
 
     def _assign_koala_member(self, params, tenant_uuid, users):
         wazo_user_id = self._find_wazo_user(users, params.get('deviceId'))
@@ -123,8 +107,6 @@ class KoalaService(object):
                 'caller_id': '"' + params.get('firstName') + ' ' + params.get('lastName') + '"',
                 'userfield': params.get('username')
             })
-            # Todo : Change firstname and lastname in wazo user
-            # Todo : Change name in main user line
 
             # Affect Wazo device to groups
             self._add_member_groups(
