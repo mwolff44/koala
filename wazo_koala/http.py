@@ -27,8 +27,8 @@ class KoalaLoginResource(AuthResource):
 
         if success:
             return "Successfull login", 201
-        esle:
-            return "Error"", 400
+        else:
+            return "Error", 400
 
 class KoalaLogoutResource(AuthResource):
 
