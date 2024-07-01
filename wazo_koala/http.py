@@ -23,9 +23,12 @@ class KoalaLoginResource(AuthResource):
     def post(self):
         tenant = Tenant.autodetect()
         request_body = koala_schema.load(request.get_json(force=True))
-        result = self._koala_service.add_koala_member(request_body, tenant.uuid)
+        success = self._koala_service.add_koala_member(request_body, tenant.uuid)
 
-        return result, 201
+        if success:
+            return "Successfull login", 201
+        esle:
+            return "Error"", 400
 
 class KoalaLogoutResource(AuthResource):
 

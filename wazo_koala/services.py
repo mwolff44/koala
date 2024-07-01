@@ -12,9 +12,9 @@ class KoalaService(object):
     def add_koala_member(self, params, tenant_uuid):
         users = self._get_user_list(tenant_uuid)
         self._remove_old_koala_member(params, tenant_uuid, users)
-        self._assign_koala_member(params, tenant_uuid, users)
+        success = self._assign_koala_member(params, tenant_uuid, users)
         
-        return 'OK'
+        return success
 
     def remove_koala_member(self, params, tenant_uuid):
         users = self._get_user_list(tenant_uuid)
@@ -96,6 +96,19 @@ class KoalaService(object):
         else:
             print("deviceID not found !")
 
+    # def _automatic_delog_koala_user(self, tenant_uuid, users):
+    #     if koala[id]['reset_at'] < datetime.datetime.now().day):
+    #         # Clear koala user info
+    #         self._remove_member_groups(id)
+    #         self.confd.users.update({
+    #             'id': wazo_device_id,
+    #             'firstname': params.get('deviceId'),
+    #             'lastname': '',
+    #             'caller_id': '"' + params.get('deviceId') + '"',
+    #             'userfield': params.get('deviceId')
+    #         })
+
+
     def _assign_koala_member(self, params, tenant_uuid, users):
         wazo_user_id = self._find_wazo_user(users, params.get('deviceId'))
         if wazo_user_id:
@@ -115,5 +128,7 @@ class KoalaService(object):
                 params.get('username'),
                 params.get('sector')['name']
             )
+            return True
         else:
             print("deviceID unknown")
+            return False
