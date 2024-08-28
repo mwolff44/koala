@@ -46,14 +46,17 @@ class KoalaService(object):
             if str(group['label']) == group_name:
                 return group['id']
                 
-    def _add_member_groups(self, tenant_uuid, wazo_user_id, username, sector_name):
+    def _add_member_groups(self, tenant_uuid, wazo_user_id, username, sector_name, job_id):
         # Add the Wazo user form Groups
         # Get sector group_id
-        group_sector_id = self._find_group(tenant_uuid, sector_name)
+        group_sector_id = self._find_group(tenant_uuid, sector_name + '_' + job_id)
         # Get user group_id
         group_user_id = self._find_group(tenant_uuid, username)       
         # Add Wazo user to group
-        self.confd.users.relations(wazo_user_id).update_groups([{'id': group_sector_id}, {'id': group_user_id}])
+        if group_user_id:
+            self.confd.users.relations(wazo_user_id).update_groups([{'id': group_sector_id}, {'id': group_user_id}])
+        else:
+            self.confd.users.relations(wazo_user_id).update_groups([{'id': group_sector_id}])
 
     def _remove_member_groups(self, wazo_user_id):
         # Remove the Wazo user form Groups
@@ -126,7 +129,8 @@ class KoalaService(object):
                 tenant_uuid,
                 wazo_user_id,
                 params.get('username'),
-                params.get('sector')['name']
+                params.get('sector')['name'],
+                params.get('job')['id']
             )
             return True
         else:
