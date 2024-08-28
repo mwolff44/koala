@@ -53,7 +53,10 @@ class KoalaService(object):
         # Get user group_id
         group_user_id = self._find_group(tenant_uuid, username)       
         # Add Wazo user to group
-        self.confd.users.relations(wazo_user_id).update_groups([{'id': group_sector_id}, {'id': group_user_id}])
+        if group_user_id:
+            self.confd.users.relations(wazo_user_id).update_groups([{'id': group_sector_id}, {'id': group_user_id}])
+        else:
+            self.confd.users.relations(wazo_user_id).update_groups([{'id': group_sector_id}])
 
     def _remove_member_groups(self, wazo_user_id):
         # Remove the Wazo user form Groups
