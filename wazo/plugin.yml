@@ -1,6 +1,6 @@
 name: koala
 namespace: mwolff44
-version: 0.0.2
+version: 0.0.3
 author: Mathias WOLFF
 display_name: KOALA
 min_wazo_version: 24.08
