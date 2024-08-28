@@ -49,7 +49,7 @@ class KoalaService(object):
     def _add_member_groups(self, tenant_uuid, wazo_user_id, username, sector_name, job_id):
         # Add the Wazo user form Groups
         # Get sector group_id
-        group_sector_id = self._find_group(tenant_uuid, sector_name + '_' + job_id)
+        group_sector_id = self._find_group(tenant_uuid, sector_name + '_' + str(job_id))
         # Get user group_id
         group_user_id = self._find_group(tenant_uuid, username)       
         # Add Wazo user to group
